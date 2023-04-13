@@ -5,8 +5,8 @@ This is a special college project made with Python for face recognition using Go
 
 
 ## Contributors ❤️
- 1. Sumit Mukharjee
- 2. Shreyash Sinha
+ 1. [Sumit Mukharjee](https://github.com/sumitishere)
+ 2. [Shreyash Sinha](https://github.com/shreyash07cod)
 
 
 
