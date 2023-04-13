@@ -5,12 +5,8 @@ This is a special college project made with Python for face recognition using Go
 
 
 ## Contributors ❤️
-<a href="https://github.com/sumitishere/Attendance-Marker-Using-Face-Recognition/graphs/contributors">
-</a>
-
-
-<a href="https://github.com/shreyash07cod/Attendance-Marker-Using-Face-Recognition/graphs/contributors">
-</a>
+ 1. Sumit Mukharjee
+ 2. Shreyash Sinha
 
 
 
