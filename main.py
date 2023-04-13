@@ -1,11 +1,20 @@
 import os
 import pickle
-
 import bbox as bbox
 import cv2
 import cvzone as cvzone
 import face_recognition
 import numpy as np
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+from firebase_admin import storage
+
+cred = credentials.Certificate("serviceAccountKey.json")
+firebase_admin.initialize_app(cred, {
+    'databaseURL': "https://face-recognition-ba666-default-rtdb.firebaseio.com/",
+    'storageBucket': "face-recognition-ba666.appspot.com"
+})
 
 # Webcam
 cap = cv2.VideoCapture(0)
@@ -35,6 +44,11 @@ encodeListKnown, studentIds = encodeListKnownWithIds
 # print(studentIds)
 print("Encoded File Loaded")
 
+# getting user data
+modeType = 0
+counter = 0
+id = 0
+
 while True:
     success, img = cap.read()
 
@@ -46,7 +60,7 @@ while True:
 
     # height and width points
     imageBackground[162:162 + 480, 55:55 + 640] = img
-    imageBackground[44:44 + 633, 808:808 + 414] = imgModeList[3]
+    imageBackground[44:44 + 633, 808:808 + 414] = imgModeList[0]
 
     for encodeFace, faceLoc in zip(encodeCurFrame, faceCurFrame):
         matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
@@ -58,13 +72,25 @@ while True:
         print("Match Index", matchIndex)
 
         if matches[matchIndex]:
-            print("KNown Face Detected")
+            print("Known Face Detected")
             print(studentIds[matchIndex])
             y1, x2, y2, x1 = faceLoc
-            y1, x2, y2, x1 = y1*4, x2*4, y2*4, x1*4
-            bbox = 55+x1, 162+y1, x2-x1, y2-y1
+            y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+            bbox = 55 + x1, 162 + y1, x2 - x1, y2 - y1
             imageBackground = cvzone.cornerRect(imageBackground, bbox, rt=0)
+            id = studentIds[matchIndex]
+            print(id)
 
+            if counter == 0:
+                counter = 1
+
+    if counter != 0:
+
+        if counter == 1:
+            studentInfo = db.reference(f'Students/{id}').get()
+            print(studentInfo)
+
+        counter += 1
 
     # ncv2.imshow("Webcam", img)
     cv2.imshow("Face Detection", imageBackground)
