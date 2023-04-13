@@ -9,6 +9,6 @@ This is a special college project made with Python for face recognition using Go
   <img src="https://contrib.rocks/image?repo=sumitishere/Attendance-Marker-Using-Face-Recognition" />
 </a>
 
-Made with [contrib.rocks](https://contrib.rocks).
+
 
 
